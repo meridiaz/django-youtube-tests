@@ -36,7 +36,11 @@ class TestYTChannel(TestCase):
         self.assertEqual(videos[0:6], self.expected)
 
 class TestViews(TestCase):
-
+    def set_up(self):
+        xmlFile = urlopen('https://www.youtube.com/feeds/videos.xml?channel_id=' \
+            + 'UC300utwSVAYOoRLEqmsprfg')
+        channel = YTChannel(xmlFile)
+        
     def test_func_aux(self):
         self.assertEqual(True, views.negar(False))
         self.assertEqual(False, views.negar(True))
@@ -55,6 +59,6 @@ class TestViews(TestCase):
         content = response.content.decode(encoding='UTF-8')
         self.assertInHTML(check, content)
 
-    def test_post(self):
-        response = self.client.post('/', {'id': 'j3FwKACOARQ'})
+    def test_get_content(self):
+        response = self.client.get('/cms/j3FwKACOARQ')
         self.assertEqual(response.status_code, 404)
