@@ -36,11 +36,11 @@ class TestYTChannel(TestCase):
         self.assertEqual(videos[0:6], self.expected)
 
 class TestViews(TestCase):
-    def set_up(self):
+    def setUp(self):
         xmlFile = urlopen('https://www.youtube.com/feeds/videos.xml?channel_id=' \
             + 'UC300utwSVAYOoRLEqmsprfg')
         channel = YTChannel(xmlFile)
-        
+
     def test_func_aux(self):
         self.assertEqual(True, views.negar(False))
         self.assertEqual(False, views.negar(True))
@@ -61,4 +61,10 @@ class TestViews(TestCase):
 
     def test_get_content(self):
         response = self.client.get('/cms/j3FwKACOARQ')
-        self.assertEqual(response.status_code, 404)
+        checks = ['<h1>Video con id: j3FwKACOARQ</h1>',
+                '<a href="https://www.youtube.com/watch?v=j3FwKACOARQ">Frikiminutos: Servidor web en producción</a>',
+                '<p><li>Fecha de publicacion: April 16, 2020, 8:27 p.m.</li></p>']
+
+        content = response.content.decode(encoding='UTF-8')
+        for check in checks:
+            self.assertInHTML(check, content)
