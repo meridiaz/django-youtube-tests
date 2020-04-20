@@ -1,0 +1,29 @@
+<h1>Lista de videos seleccionados:</h1>
+<ul>
+{% for video in videos_list %}
+        {% if video.esta_seleccionado %}
+            <li>
+            <p> Titulo: {{video.titulo}}</p>
+            <p> Link: <a href=/cms/{{ video.ytid }}>/cms/{{ video.ytid }}</a> </p>
+            <form action="" method="POST">
+                  <button name="action" value= {{ video.ytid }} type = "submit">Eliminar</button>
+            </form>
+            </li>
+        {% endif %}
+{% endfor %}
+</ul>
+
+<h1>Lista de videos seleccionables:</h1>
+<ul>
+{% for video in videos_list %}
+      {% if not video.esta_seleccionado %}
+        <li>
+        <p> Titulo: {{video.titulo}}</p>
+        <p> Link: <a href=/cms/{{ video.ytid }}>/cms/{{ video.ytid }}</a> </p>
+        <form action="" method="POST">
+              <button name="action" value= {{ video.ytid}} type = "submit">Seleccionar</button>
+        </form>
+        </li>
+      {% endif %}
+{% endfor %}
+</ul>
